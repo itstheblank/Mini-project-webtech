@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin sinh viên - IT4409</title>
+    <!-- W3.CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Top navigator -->
+<div class="w3-top" style="z-index: 1000;">
+  <div class="w3-bar w3-card modern-nav">
+    <a href="index.html" class="w3-bar-item w3-button w3-padding-large w3-hover-blue"><i class="fa fa-graduation-cap"></i> Logo</a>
+    <a href="course.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hover-blue">Thông tin môn học</a>
+    <a href="tech.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hover-blue">Các công nghệ Web</a>
+    <a href="student.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-hover-blue" style="background-color: #2563eb;">Thông tin sinh viên</a>
+    <!-- Mobile menu button -->
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="toggleMobileMenu()">&#9776;</a>
+  </div>
+</div>
+
+<!-- Mobile Menu Container -->
+<div id="mobileMenu" class="w3-bar-block modern-nav w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px; z-index: 999;">
+    <a href="course.html" class="w3-bar-item w3-button w3-padding-large w3-hover-blue">Thông tin môn học</a>
+    <a href="tech.html" class="w3-bar-item w3-button w3-padding-large w3-hover-blue">Các công nghệ Web</a>
+    <a href="student.html" class="w3-bar-item w3-button w3-padding-large w3-hover-blue" style="background-color: #2563eb;">Thông tin sinh viên</a>
+</div>
+
+<!-- Main Container -->
+<div class="w3-content w3-margin-top" style="max-width:1200px; padding-top: 60px;">
+  <div class="w3-row-padding">
+    
+    <!-- Left Sidebar (Navigator) -->
+    <div class="w3-col m3 w3-margin-bottom">
+      <div class="w3-card w3-white w3-round-large sidebar-menu">
+        <div class="w3-container w3-blue w3-round-top">
+          <h4>Menu Điều Hướng</h4>
+        </div>
+        <ul class="w3-ul w3-hoverable w3-round-bottom" style="padding:0; margin:0; list-style-type: none;">
+          <li><a href="#profile">Hồ sơ cá nhân</a></li>
+          <li><a href="#experience">Kinh nghiệm làm việc Web</a></li>
+          <li><a href="#hobbies">Sở thích</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="w3-col m9">
+      <div id="profile" class="w3-card w3-white w3-margin-bottom w3-round-large article-box">
+        <div class="w3-container w3-padding-16">
+          <h2 class="w3-text-blue">Hồ sơ cá nhân</h2>
+          <div class="w3-row-padding" style="margin: 0 -16px;">
+            <div class="w3-col m4 l3 w3-center w3-padding-16">
+              <img src="https://placehold.co/400x400/3B82F6/FFF?text=Avatar" class="w3-image w3-circle profile-img" style="max-width: 150px; width:100%" alt="Student Avatar">
+            </div>
+            <div class="w3-col m8 l9">
+              <h3 style="margin-top:0; font-weight:700;">Nguyễn Văn A</h3>
+              <p><i class="fa fa-envelope w3-text-blue w3-margin-right"></i> nguyen.vana@student.hust.edu.vn</p>
+              <p><i class="fa fa-phone w3-text-blue w3-margin-right"></i> +84 123 456 789</p>
+              <p><i class="fa fa-map-marker w3-text-blue w3-margin-right"></i> Hà Nội, Việt Nam</p>
+              <p>Sinh viên năm 3 chuyên ngành Khoa học Máy tính. Đam mê thiết kế và phát triển ứng dụng Web, luôn mong muốn học hỏi các công nghệ mới và áp dụng vào thực tế.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="experience" class="w3-card w3-white w3-margin-bottom w3-round-large article-box">
+        <div class="w3-container w3-padding-16">
+          <h2 class="w3-text-blue">Kinh nghiệm làm việc Web</h2>
+          <div class="w3-row-padding" style="margin: 0 -16px;">
+            <div class="w3-col m8 l9">
+              <div class="w3-panel w3-leftbar w3-border-blue w3-pale-blue w3-padding">
+                <h4><i class="fa fa-briefcase w3-text-blue"></i> Dự án cá nhân: Portfolio Website</h4>
+                <p>Xây dựng trang web cá nhân sử dụng HTML, CSS (Tailwind) và JavaScript thuần. Tích hợp form liên hệ gửi email tự động qua thư viện bên thứ 3.</p>
+              </div>
+              <div class="w3-panel w3-leftbar w3-border-blue w3-pale-blue w3-padding">
+                <h4><i class="fa fa-code w3-text-blue"></i> Bài tập lớn môn Cơ sở dữ liệu</h4>
+                <p>Phát triển hệ thống quản lý thư viện mini với giao diện web, backend PHP và cơ sở dữ liệu MySQL, áp dụng các kỹ thuật chống SQL Injection cơ bản.</p>
+              </div>
+              <img src="https://placehold.co/800x400/6366F1/FFF?text=Web+Projects" class="w3-image w3-round w3-margin-top" style="width:100%" alt="Projects image">
+            </div>
+            <div class="w3-col m4 l3 w3-center w3-padding-16">
+              <a href="#" target="_blank"><img src="https://placehold.co/300x500/10B981/FFF?text=AD+Laptops" class="w3-image w3-round hover-ad" alt="Advertisement"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="hobbies" class="w3-card w3-white w3-margin-bottom w3-round-large article-box">
+        <div class="w3-container w3-padding-16">
+          <h2 class="w3-text-blue">Sở thích</h2>
+          <div class="w3-row-padding" style="margin: 0 -16px;">
+            <div class="w3-col m12">
+              <ul class="w3-ul w3-hoverable w3-border">
+                <li><i class="fa fa-book w3-text-blue w3-margin-right"></i>Đọc sách về công nghệ và khởi nghiệp.</li>
+                <li><i class="fa fa-gamepad w3-text-blue w3-margin-right"></i>Chơi thể thao điện tử (Esports).</li>
+                <li><i class="fa fa-users w3-text-blue w3-margin-right"></i>Tham gia các sự kiện Hackathon dành cho sinh viên IT.</li>
+              </ul>
+              <div class="w3-center w3-margin-top w3-padding-16">
+                <a href="#" target="_blank"><img src="https://placehold.co/728x90/F59E0B/FFF?text=AD+Gaming+Gears" class="w3-image w3-round hover-ad" style="max-width:100%" alt="Banner Advertisement"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-margin-top custom-footer">
+  <div class="w3-content" style="max-width:1200px">
+      <div class="w3-row-padding">
+        <div class="w3-col m6">
+          <h4>IT4409 - Công nghệ Web</h4>
+          <p>Dự án thực hành xây dựng trang web tĩnh sử dụng HTML, CSS và W3.CSS framework.</p>
+        </div>
+        <div class="w3-col m6">
+          <h4>Liên kết hữu ích</h4>
+          <p><i class="fa fa-caret-right"></i> <a href="https://sis.hust.edu.vn">Hệ thống SIS HUST</a></p>
+          <p><i class="fa fa-caret-right"></i> <a href="https://soict.hust.edu.vn">Viện CNTT&TT</a></p>
+        </div>
+      </div>
+      <div class="w3-center w3-margin-top w3-padding-top-24" style="border-top: 1px solid #334155;">
+          <p>&copy; 2026 Bản quyền thuộc về Sinh viên.</p>
+      </div>
+  </div>
+</footer>
+
+<script>
+// Toggle mobile menu
+function toggleMobileMenu() {
+  var x = document.getElementById("mobileMenu");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>
