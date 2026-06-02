@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Services Integration</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>Mini Project 3</h1>
+            <div id="auth-section">
+                <button id="login-btn" class="btn google-btn">Đăng nhập bằng Google</button>
+                <div id="user-info" class="hidden">
+                    <img id="user-avatar" src="" alt="Avatar">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="btn danger-btn">Đăng xuất</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD -->
+        <main id="dashboard" class="hidden">
+            <div class="grid">
+                <!-- GMAIL CARD -->
+                <div class="card glass">
+                    <h2>Gmail API</h2>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchTab('inbox')">Hộp thư</button>
+                        <button class="tab-btn" onclick="switchTab('compose')">Soạn thư</button>
+                    </div>
+                    
+                    <!-- Inbox Tab -->
+                    <div id="tab-inbox" class="tab-content active">
+                        <button id="check-mail-btn" class="btn">Kiểm tra Email</button>
+                        <ul id="email-list"></ul>
+                    </div>
+
+                    <!-- Compose Tab -->
+                    <div id="tab-compose" class="tab-content hidden">
+                        <form id="email-form">
+                            <input type="email" id="email-to" placeholder="Người nhận" required>
+                            <input type="text" id="email-subject" placeholder="Tiêu đề" required>
+                            <textarea id="email-body" rows="4" placeholder="Nội dung" required></textarea>
+                            <button type="submit" class="btn primary-btn">Gửi Email</button>
+                        </form>
+                        <div id="email-status"></div>
+                    </div>
+                </div>
+
+                <!-- GEMINI CHATBOT CARD -->
+                <div class="card glass">
+                    <h2>Gemini Chatbot</h2>
+                    <div class="chat-box" id="chat-box">
+                        <div class="message ai">Xin chào! Tôi có thể giúp gì cho bạn?</div>
+                    </div>
+                    <form id="chat-form" class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Nhập câu hỏi..." required>
+                        <button type="submit" class="btn primary-btn">Gửi</button>
+                    </form>
+                </div>
+
+                <!-- NGAN LUONG PAYMENT CARD -->
+                <div class="card glass">
+                    <h2>Thanh toán Ngân Lượng</h2>
+                    <form id="payment-form">
+                        <div class="input-group">
+                            <label for="amount">Số tiền (VNĐ):</label>
+                            <input type="number" id="amount" value="50000" min="2000" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="order-info">Thông tin thanh toán:</label>
+                            <input type="text" id="order-info" value="Thanh toan Mini Project" required>
+                        </div>
+                        <button type="submit" class="btn success-btn">Thanh toán ngay</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
