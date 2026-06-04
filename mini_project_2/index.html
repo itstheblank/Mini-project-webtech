@@ -669,6 +669,92 @@
         </div>
       </div>
     </div>
+    <div id="admin-page" class="w3-container w3-padding-64 hidden">
+      <div class="container">
+        <div class="header">Admin Page</div>
+        <button class="w3-button w3-green w3-margin-bottom" onClick="addTopMenu()">+Thêm Menu Mới</button>
+        <table class="w3-table-all w3-hoverable">
+          <thead>
+            <tr class="w3-light-grey">
+              <th>ID</th>
+              <th>Tên Menu</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="admin-top-menu-tbody">
+            <!-- Render from localStorage -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Trang 2: Admin Menu Left -->
+    <div id="admin-menu-left" class="w3-container w3-padding-64 hidden">
+      <div class="container">
+        <div class="header">Quản Lý Menu Trái</div>
+        <div class="w3-margin-bottom">
+          <button class="w3-button w3-green" onClick="addLeftMenu()">+ Thêm Menu Trái</button>
+          <button id="btn-reset-student" class="w3-button w3-red w3-right hidden" onclick="resetStudentInfo()">Reset TT
+            Sinh viên</button>
+        </div>
+        <table class="w3-table-all w3-hoverable">
+          <thead>
+            <tr class="w3-light-grey">
+              <th>ID</th>
+              <th>Tên Menu trái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="admin-left-menu-tbody">
+            <!-- Render from localStorage -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Trang 3: Admin Contents Layout -->
+    <div id="admin-contents-layout" class="w3-container w3-padding-64 hidden">
+      <div class="container">
+        <div class="header">
+          Quản lý bố cục (Layout)
+          <a href="https://www.w3schools.com/css/css_rwd_grid.asp" target="_blank"
+            class="w3-text-blue w3-large w3-margin-left" title="Hướng dẫn sử dụng Grid Layout"><i
+              class="fas fa-info-circle"></i></a>
+        </div>
+        <button class="w3-button w3-green w3-margin-bottom" onClick="addLayoutContent()">+Thêm Nội dung Layout</button>
+        <table class="w3-table-all w3-hoverable w3-margin-bottom">
+          <thead>
+            <tr class="w3-light-grey">
+              <th>ID</th>
+              <th>Tên Mục</th>
+              <th>Layout (Span cột)</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="admin-layout-tbody">
+            <!-- Render bằng JS -->
+          </tbody>
+        </table>
+        <div class="header" style="margin-top: 30px;">Preview Layout</div>
+        <div id="layout-preview-area" class="w3-margin-bottom"
+          style="background: #f9f9f9; padding: 10px; border-radius: 5px;"></div>
+      </div>
+    </div>
+    <!-- Trang 4: Admin Contents (Soạn thảo) -->
+    <div id="admin-contents" class="w3-container w3-padding-64 hidden">
+      <div class="container">
+        <div class="header">Soạn thảo Nội dung</div>
+
+        <!-- QuillJS Editor -->
+        <div id="editor-container" style="height: 300px; background: white;"></div>
+        <button class="w3-button w3-blue w3-margin-top" onclick="saveContent()">Lưu Nội Dung</button>
+        <button class="w3-button w3-grey w3-margin-top" onclick="viewAdminLayout(currentLeftMenuId)">Quay lại
+          Layout</button>
+        <div class="header" style="margin-top: 30px;">Preview Nội dung (Hiển thị thực tế)</div>
+        <!-- Nơi render nội dung thực -->
+        <div id="content-preview" class="grid-container w3-padding" style="border: 1px solid #ccc; min-height: 200px;">
+          <!-- Nội dung HTML render ở đây -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <footer id="myFooter">
@@ -685,6 +771,8 @@
   </footer>
 
   <!-- END MAIN -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="./js/data.js"></script>
   <script src="./js/scripts.js"></script>
 
   <div id="highlighter--hover-tools" style="display: none;">
