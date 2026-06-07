@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <!-- HEADER -->
@@ -28,12 +30,12 @@
                 <!-- GMAIL CARD -->
                 <div class="card glass">
                     <h2>Gmail API</h2>
-                    
+
                     <div class="tabs">
                         <button class="tab-btn active" onclick="switchTab('inbox')">Hộp thư</button>
                         <button class="tab-btn" onclick="switchTab('compose')">Soạn thư</button>
                     </div>
-                    
+
                     <!-- Inbox Tab -->
                     <div id="tab-inbox" class="tab-content active">
                         <button id="check-mail-btn" class="btn">Kiểm tra Email</button>
@@ -64,9 +66,9 @@
                     </form>
                 </div>
 
-                <!-- NGAN LUONG PAYMENT CARD -->
+                <!-- VietQR PAYMENT CARD -->
                 <div class="card glass">
-                    <h2>Thanh toán Ngân Lượng</h2>
+                    <h2>Thanh toán VietQR</h2>
                     <form id="payment-form">
                         <div class="input-group">
                             <label for="amount">Số tiền (VNĐ):</label>
@@ -76,8 +78,12 @@
                             <label for="order-info">Thông tin thanh toán:</label>
                             <input type="text" id="order-info" value="Thanh toan Mini Project" required>
                         </div>
-                        <button type="submit" class="btn success-btn">Thanh toán ngay</button>
+                        <button type="submit" class="btn success-btn">Tạo mã QR thanh toán</button>
                     </form>
+
+                    <div id="qr-result" class="hidden" style="margin-top: 1.5rem; text-align: center;">
+                        <img id="qr-image" src="" alt="Mã QR thanh toán" style="max-width: 80%; border-radius: 8px;">
+                    </div>
                 </div>
             </div>
         </main>
@@ -85,4 +91,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>

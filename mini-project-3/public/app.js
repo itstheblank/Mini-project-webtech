@@ -27,7 +27,7 @@ async function checkLoginStatus() {
             loginBtn.classList.add('hidden');
             userInfoDiv.classList.remove('hidden');
             dashboardDiv.classList.remove('hidden');
-            
+
             userNameSpan.textContent = user.name;
             userAvatarImg.src = user.picture;
         }
@@ -37,10 +37,10 @@ async function checkLoginStatus() {
 }
 
 // 2. Chuyển Tab Gmail
-window.switchTab = function(tabName) {
+window.switchTab = function (tabName) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    
+
     document.getElementById(`tab-${tabName}`).classList.remove('hidden');
     event.target.classList.add('active');
 }
@@ -53,12 +53,21 @@ document.getElementById('check-mail-btn').addEventListener('click', async () => 
         const res = await fetch('/api/emails');
         const emails = await res.json();
         list.innerHTML = '';
-        if(emails.length === 0) list.innerHTML = '<li>Không có email.</li>';
+        if (emails.length === 0) list.innerHTML = '<li>Không có email.</li>';
         emails.forEach(email => {
+            let formattedDate = '';
+            if (email.date) {
+                const dateObj = new Date(email.date);
+                formattedDate = dateObj.toLocaleString('vi-VN');
+            }
+
             list.innerHTML += `
                 <li>
                     <strong>${email.subject || '(Không có tiêu đề)'}</strong>
-                    <span>Từ: ${email.from}</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                        <span>Từ: ${email.from}</span>
+                        <small style="color: var(--text-muted); font-size: 0.75rem;">${formattedDate}</small>
+                    </div>
                 </li>
             `;
         });
@@ -74,21 +83,21 @@ document.getElementById('email-form').addEventListener('submit', async (e) => {
     const status = document.getElementById('email-status');
     btn.disabled = true;
     status.textContent = 'Đang gửi...';
-    
+
     const payload = {
         to: document.getElementById('email-to').value,
         subject: document.getElementById('email-subject').value,
         body: document.getElementById('email-body').value
     };
-    
+
     try {
         const res = await fetch('/api/send-email', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         const data = await res.json();
-        if(res.ok) {
+        if (res.ok) {
             status.textContent = 'Gửi thành công!';
             status.style.color = 'green';
             e.target.reset();
@@ -108,28 +117,28 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
     const input = document.getElementById('chat-input');
     const box = document.getElementById('chat-box');
     const msg = input.value;
-    
-    if(!msg) return;
-    
+
+    if (!msg) return;
+
     // Thêm tin nhắn user
     box.innerHTML += `<div class="message user">${msg}</div>`;
     input.value = '';
     box.scrollTop = box.scrollHeight;
-    
+
     // Hiện đang nhập
     const loadingId = 'loading-' + Date.now();
     box.innerHTML += `<div class="message ai" id="${loadingId}">...</div>`;
     box.scrollTop = box.scrollHeight;
-    
+
     try {
         const res = await fetch('/api/chat', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: msg })
         });
         const data = await res.json();
         document.getElementById(loadingId).remove();
-        
+
         if (res.ok) {
             box.innerHTML += `<div class="message ai">${data.reply.replace(/\n/g, '<br>')}</div>`;
         } else {
@@ -142,32 +151,42 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
     box.scrollTop = box.scrollHeight;
 });
 
-// 6. Thanh toán Ngân Lượng
+// 6. Thanh toán VietQR
 document.getElementById('payment-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
+    const qrResultDiv = document.getElementById('qr-result');
+    const qrImage = document.getElementById('qr-image');
+
     btn.disabled = true;
-    
+    btn.textContent = 'Đang tạo QR...';
+    qrResultDiv.classList.add('hidden');
+
     const payload = {
         amount: document.getElementById('amount').value,
         order_info: document.getElementById('order-info').value
     };
-    
+
     try {
         const res = await fetch('/api/payment', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
         const data = await res.json();
-        if (data.paymentUrl) {
-            window.location.href = data.paymentUrl;
-        } else {
-            alert('Lỗi tạo URL thanh toán');
-            btn.disabled = false;
+
+        if (data.success && data.qrDataURL) {
+            qrImage.src = data.qrDataURL;
+            qrResultDiv.classList.remove('hidden');
+        }
+        else {
+            alert('Lỗi: ' + (data.error || 'Tạo QR thất bại'));
         }
     } catch (err) {
         alert('Lỗi kết nối API thanh toán');
-        btn.disabled = false;
     }
+
+    //Always reset button
+    btn.disabled = false;
+    btn.textContent = 'Tạo mã QR thanh toán';
 });

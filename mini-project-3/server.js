@@ -6,6 +6,7 @@ const { google } = require('googleapis');
 const { GoogleGenAI } = require('@google/genai');
 const crypto = require('crypto');
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 app.use(cors());
@@ -96,7 +97,8 @@ app.get('/api/emails', checkAuth, async (req, res) => {
             const headers = messageData.data.payload.headers;
             const subject = headers.find(h => h.name === 'Subject')?.value;
             const from = headers.find(h => h.name === 'From')?.value;
-            emails.push({ id: msg.id, subject, from, snippet: messageData.data.snippet });
+            const date = headers.find(h => h.name === 'Date')?.value;
+            emails.push({ id: msg.id, subject, from, date, snippet: messageData.data.snippet });
         }
         res.json(emails);
     } catch (error) {
@@ -156,47 +158,35 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-// --- 4. NGÂN LƯỢNG API ---
-app.post('/api/payment', (req, res) => {
+// ---4. VIETQR API ---
+app.post('/api/payment', async (req, res) => {
     const { amount, order_info } = req.body;
 
-    const merchant_site_code = process.env.NGANLUONG_MERCHANT_ID;
-    const merchant_password = process.env.NGANLUONG_MERCHANT_PASSWORD;
-    const receiver_email = process.env.NGANLUONG_RECEIVER_EMAIL;
-    const url_nganluong = process.env.NGANLUONG_URL;
+    try {
+        const payload = {
+            accountNo: process.env.VIETQR_ACCOUNT_NO,
+            accountName: process.env.VIETQR_ACCOUNT_NAME,
+            amount: Number(amount),
+            addInfo: order_info,
+            format: "text",
+            template: "compact",
+            acqId: Number(process.env.VIETQR_BANK_ID)
+        };
 
-    const order_code = 'ORDER_' + Date.now();
-    const return_url = 'http://localhost:3000/payment-success.html';
-    const cancel_url = 'http://localhost:3000/';
+        const response = await axios.post('https://api.vietqr.io/v2/generate', payload);
 
-    // Tạo mã checksum (Mã hóa MD5 theo tài liệu Ngân Lượng)
-    const stringToHash = merchant_site_code + ' ' + return_url + ' ' + receiver_email + ' ' +
-        merchant_password + ' ' + order_code + ' ' + amount + ' ' + 'vnd' + ' ' +
-        '1' + ' ' + '0' + ' ' + '0' + ' ' + '0' + ' ' + '0' + ' ' + order_info + ' ' + ' ' + ' ' + ' ' + ' ' + ' ';
-
-    const secure_code = crypto.createHash('md5').update(stringToHash).digest('hex');
-
-    // Chuyển hướng sang Ngân Lượng
-    const params = new URLSearchParams({
-        merchant_site_code,
-        return_url,
-        receiver: receiver_email,
-        transaction_info: order_info,
-        order_code,
-        price: amount,
-        currency: 'vnd',
-        quantity: 1,
-        tax: 0,
-        discount: 0,
-        fee_cal: 0,
-        fee_shipping: 0,
-        order_description: order_info,
-        buyer_info: ' ', // Bắt buộc nhưng có thể để trống
-        affiliate_code: ' ',
-        secure_code
-    });
-
-    res.json({ paymentUrl: `${url_nganluong}?${params.toString()}` });
+        if (response.data && response.data.code === '00') {
+            res.json({
+                success: true,
+                qrDataURL: response.data.data.qrDataURL
+            });
+        } else {
+            res.status(500).json({ error: 'Không thể tạo mã QR' });
+        }
+    } catch (error) {
+        console.error('Lỗi VietQR', error);
+        res.status(500).json({ error: 'Lỗi kết nối API VietQR' });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
